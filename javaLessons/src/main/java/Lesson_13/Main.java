@@ -1,7 +1,16 @@
 package Lesson_13;
 
+import java.util.Map;
+
 public class Main {
 	public static void main(String[] args) {
+
+		String[] words = {"apple", "banana", "apple", "orange", "banana", "grape", "apple", "kiwi", "orange", "kiwi"};
+		WordCounter wordCounter = new WordCounter(words);
+
+		Map<String, Integer> wordCountMap = wordCounter.countWords();
+		wordCounter.printUniqueWords(wordCountMap);
+		wordCounter.printWordCounts(wordCountMap);
 
 		PhoneDirectory phoneDirectory = new PhoneDirectory();
 
@@ -11,7 +20,7 @@ public class Main {
 		phoneDirectory.add("Brown", "111-222-3333");
 		phoneDirectory.add("Johnson", "444-444-4444");
 
-		System.out.println("Phone numbers for Smith:");
+		System.out.println("\nPhone numbers for Smith:");
 		for (String number : phoneDirectory.get("Smith")) {
 			System.out.println(number);
 		}
