@@ -1,35 +1,41 @@
 package Lesson_13;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class WordCounter {
 
-	private String[] words;
+	private final String[] words;
 
-	public WordCounter(String[] words) {
+	public WordCounter(String... words) {
 		this.words = words;
 	}
 
-	public Map<String, Integer> countWords() {
-		Map<String, Integer> wordCountMap = new HashMap<>();
-		for (String word : words) {
-			wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
+	public Set<String> getUnique() {
+		if (words == null) {
+			return Collections.emptySet();
 		}
-		return wordCountMap;
+
+		return new LinkedHashSet<>(Arrays.asList(words));
+
 	}
 
-	public void printUniqueWords(Map<String, Integer> wordCountMap) {
-		System.out.println("Unique words:");
-		for (String word : wordCountMap.keySet()) {
-			System.out.println(word);
+	public Map<String, Long> getFrequency() {
+		if (words == null) {
+			return Collections.emptyMap();
 		}
-	}
 
-	public void printWordCounts(Map<String, Integer> wordCountMap) {
-		System.out.println("\nWord counts:");
-		for (Map.Entry<String, Integer> entry : wordCountMap.entrySet()) {
-			System.out.println(entry.getKey() + ": " + entry.getValue());
+		var frequencyMap = new LinkedHashMap<String, Long>();
+		for (var word : words) {
+			frequencyMap.compute(word, (key, oldValue) -> Objects.requireNonNullElse(oldValue, 0L) + 1L);
 		}
+
+		return frequencyMap;
 	}
 }

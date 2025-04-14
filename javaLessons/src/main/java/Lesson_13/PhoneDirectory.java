@@ -1,22 +1,27 @@
 package Lesson_13;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PhoneDirectory {
-	private Map<String, List<String>> directory;
+
+	private final Map<String, List<String>> lastNamesToPhoneNumbers;
 
 	public PhoneDirectory() {
-		directory = new HashMap<>();
+		lastNamesToPhoneNumbers = new HashMap<>();
 	}
 
 	public void add(String lastName, String phoneNumber) {
-		directory.computeIfAbsent(lastName, k -> new ArrayList<>()).add(phoneNumber);
+		lastNamesToPhoneNumbers.computeIfAbsent(lastName, key -> new ArrayList<>())
+				.add(phoneNumber);
 	}
 
 	public List<String> get(String lastName) {
-		return directory.getOrDefault(lastName, new ArrayList<>());
+		return Collections.unmodifiableList(
+				lastNamesToPhoneNumbers.getOrDefault(lastName, Collections.emptyList()));
 	}
+
 }

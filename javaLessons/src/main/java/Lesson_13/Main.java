@@ -4,40 +4,30 @@ import java.util.Map;
 
 public class Main {
 	public static void main(String[] args) {
+		var words = new WordCounter("apple", "banana", "apple", "orange", "banana", "grape", "apple", "kiwi", "orange", "kiwi");
 
-		String[] words = {"apple", "banana", "apple", "orange", "banana", "grape", "apple", "kiwi", "orange", "kiwi"};
-		WordCounter wordCounter = new WordCounter(words);
+		System.out.println("Unique words:");
+		words.getUnique().forEach(System.out::println);
 
-		Map<String, Integer> wordCountMap = wordCounter.countWords();
-		wordCounter.printUniqueWords(wordCountMap);
-		wordCounter.printWordCounts(wordCountMap);
+		System.out.println("\nWords frequency:");
+		words.getFrequency().forEach((key, value) -> System.out.println(key + ": " + value));
 
-		PhoneDirectory phoneDirectory = new PhoneDirectory();
-
+		var phoneDirectory = new PhoneDirectory();
 		phoneDirectory.add("Smith", "123-456-7890");
 		phoneDirectory.add("Johnson", "987-654-3210");
 		phoneDirectory.add("Smith", "555-555-5555");
 		phoneDirectory.add("Brown", "111-222-3333");
 		phoneDirectory.add("Johnson", "444-444-4444");
 
-		System.out.println("\nPhone numbers for Smith:");
-		for (String number : phoneDirectory.get("Smith")) {
-			System.out.println(number);
-		}
+		printNumbersByLastName(phoneDirectory, "Smith");
+		printNumbersByLastName(phoneDirectory, "Johnson");
+		printNumbersByLastName(phoneDirectory, "Brown");
+		printNumbersByLastName(phoneDirectory, "Davis");
+	}
 
-		System.out.println("\nPhone numbers for Johnson:");
-		for (String number : phoneDirectory.get("Johnson")) {
-			System.out.println(number);
-		}
+	private static void printNumbersByLastName(PhoneDirectory phoneDirectory, String lastName) {
+		System.out.printf("%nPhone numbers for %s:%n", lastName);
 
-		System.out.println("\nPhone numbers for Brown:");
-		for (String number : phoneDirectory.get("Brown")) {
-			System.out.println(number);
-		}
-
-		System.out.println("\nPhone numbers for Davis:");
-		for (String number : phoneDirectory.get("Davis")) {
-			System.out.println(number);
-		}
+		phoneDirectory.get(lastName).forEach(System.out::println);
 	}
 }
